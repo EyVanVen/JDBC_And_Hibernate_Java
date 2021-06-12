@@ -14,14 +14,15 @@ public class Java_Join {
         Connection con = DriverManager.getConnection(URL, LOGIN, PASSWORD);
         Statement stat = con.createStatement();
 
-        stat.addBatch("SELECT NamesAndNumbers.NAME, NamesAndNumbers.PHONES, City FROM NamesAndNumbers " +
+        stat.execute("SELECT NamesAndNumbers.NAME, NamesAndNumbers.PHONES, City FROM NamesAndNumbers " +
                 "JOIN family ON NamesAndNumbers.NAME = family.NAME;");
-        stat.addBatch("SELECT family.NAME, NamesAndNumbers.PHONES, family.Birthday, family.Married_status FROM" +
+        stat.execute("SELECT family.NAME, NamesAndNumbers.PHONES, family.Birthday, family.Married_status FROM" +
                 " family family INNER JOIN NamesAndNumbers NamesAndNumbers ON NamesAndNumbers.name = family.name" +
                 " where family.Married_status = \"Alone\";");
-        stat.addBatch("SELECT NamesAndNumbers.NAME, birthday, phones from NamesAndNumber JOIN PostAndSalary on" +
-                " NamesAndNumbers.name = PostAndSalary.name JOIN family on NamesAndNumbers.name = family.name" +
-                " where PostAndSalary.post = 'Manager';");
+        stat.execute("SELECT NamesAndNumbers.NAME, birthday, phones from NamesAndNumbers\n" +
+                "\t\tJOIN PostAndSalary on NamesAndNumbers.name = PostAndSalary.name\n" +
+                "\t\tJOIN family on NamesAndNumbers.name = family.name\n" +
+                "\t\twhere PostAndSalary.post = 'Manager';");
     }
 
     public static void connect_driver (){
